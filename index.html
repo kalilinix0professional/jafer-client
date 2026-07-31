@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>█Ťђẽ•1•ҚĨŊĜ█ | Jafer Morhej — Cybersecurity &amp; Web Development</title>
+<meta name="description" content="Premium web development and military-grade cybersecurity for businesses that refuse to be average. Damascus, Syria.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root{
+  --bg:#050505;
+  --surface:#0f0f0f;
+  --surface-border:#1a1a1a;
+  --gold:#d4af37;
+  --cyan:#00d4ff;
+  --danger:#ff2a6d;
+  --text:#e8e8e8;
+  --text-muted:#888888;
+  --gold-text:#050505;
+  --font-ar:'Cairo', sans-serif;
+  --font-display:'Space Grotesk', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'JetBrains Mono', monospace;
+  --radius:16px;
+  --speed:0.3s;
+  --show-fx:1;
+}
+[data-theme="light"]{
+  --bg:#f6f4ef;
+  --surface:#ffffff;
+  --surface-border:rgba(20,20,10,0.10);
+  --gold:#a9791f;
+  --cyan:#0086a8;
+  --danger:#c81f57;
+  --text:#14140f;
+  --text-muted:#6b6b62;
+  --gold-text:#ffffff;
+  --show-fx:0;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--font-ar),var(--font-body),sans-serif;
+  transition:background-color var(--speed) ease,color var(--speed) ease;
+  overflow-x:hidden;position:relative;
+}
+a{color:inherit;text-decoration:none;}
+img,svg{display:block;max-width:100%;}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+button{font-family:inherit;}
+
+.txt-en{font-family:var(--font-body);}
+.mono{font-family:var(--font-mono);}
+body.lang-en .txt-ar{font-size:0.8em;opacity:0.6;}
+body.lang-en .txt-en{font-size:1em;opacity:1;font-weight:600;}
+body.lang-ar .txt-en{font-size:0.8em;opacity:0.6;}
+body.lang-ar .txt-ar{font-size:1em;opacity:1;}
+
+.bg-grid,.bg-noise,.scanline{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:var(--show-fx);}
+.bg-grid{
+  background-image:
+    repeating-linear-gradient(to right, rgba(255,255,255,0.035) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.035) 0 1px, transparent 1px 44px);
+}
+.bg-noise{
+  opacity:calc(var(--show-fx) * 0.035);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode:overlay;
+}
+.scanline{
+  height:120px;top:-120px;
+  background:linear-gradient(to bottom, transparent, rgba(0,212,255,0.06), transparent);
+  animation:scanSweep 8s linear infinite;
+}
+@keyframes scanSweep{0%{transform:translateY(0);}100%{transform:translateY(calc(100vh + 240px));}}
+
+main,footer{position:relative;z-index:2;}
+
+#scrollProgress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--gold),var(--cyan));z-index:9000;transition:width .1s linear;}
+
+#loader{position:fixed;inset:0;z-index:10000;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease,visibility .5s ease;}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.loader-term{font-family:var(--font-mono);color:#3cff6e;font-size:14px;line-height:2;direction:ltr;text-align:left;min-width:280px;}
+.loader-term .cur{display:inline-block;width:7px;background:#3cff6e;animation:blink .8s steps(1) infinite;}
+@keyframes blink{50%{opacity:0;}}
+
+#cursorDot{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--cyan);z-index:9999;pointer-events:none;transform:translate(-50%,-50%);transition:width .2s ease,height .2s ease,background-color .2s ease,border-color .2s ease;mix-blend-mode:difference;}
+#cursorDot.hover{width:36px;height:36px;background:transparent;border:1.5px solid var(--gold);}
+html.custom-cursor *{cursor:none !important;}
+
+.top-bar{position:fixed;top:0;inset-inline:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:18px 24px;pointer-events:none;}
+.top-bar > *{pointer-events:auto;}
+.logo-mark{font-family:var(--font-mono);font-weight:700;letter-spacing:2px;color:var(--gold);font-size:0.95rem;}
+.top-controls{display:flex;align-items:center;gap:10px;}
+.pill-toggle{display:flex;border:1px solid var(--surface-border);border-radius:999px;overflow:hidden;background:rgba(15,15,15,0.6);backdrop-filter:blur(6px);}
+[data-theme="light"] .pill-toggle{background:rgba(255,255,255,0.7);}
+.pill-toggle button{border:none;background:transparent;color:var(--text-muted);padding:7px 14px;font-size:0.78rem;font-weight:700;cursor:pointer;font-family:var(--font-mono);transition:background-color var(--speed) ease,color var(--speed) ease;}
+.pill-toggle button.active{background:var(--gold);color:var(--gold-text);}
+.icon-toggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--surface-border);background:rgba(15,15,15,0.6);backdrop-filter:blur(6px);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;}
+[data-theme="light"] .icon-toggle{background:rgba(255,255,255,0.7);}
+
+.wa-fab{position:fixed;bottom:24px;inset-inline-end:24px;z-index:800;width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 0 rgba(37,211,102,0.55);animation:waPulse 2.4s ease-out infinite;}
+.wa-fab svg{width:28px;height:28px;fill:#fff;}
+@keyframes waPulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5);}70%{box-shadow:0 0 0 16px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+
+.hero{min-height:100vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 60px;overflow:hidden;}
+#particleCanvas{position:absolute;inset:0;z-index:0;opacity:0.7;}
+.hero > *:not(#particleCanvas){position:relative;z-index:1;}
+
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;
+  border:1px solid rgba(212,175,55,0.4);background:rgba(212,175,55,0.08);
+  font-size:0.8rem;font-weight:700;margin-bottom:28px;
+}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulseDot 1.8s ease-in-out infinite;}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.4);}}
+
+.hero-h1{font-family:var(--font-ar);font-weight:900;font-size:clamp(2.1rem,6vw,4rem);line-height:1.25;margin:0 0 6px;position:relative;color:var(--text);}
+.hero-h1.txt-en{font-family:var(--font-display);font-size:clamp(1.3rem,4vw,2.3rem);color:var(--text-muted);margin-bottom:30px;}
+.glitch{position:relative;display:inline-block;}
+.glitch::before,.glitch::after{content:attr(data-text);position:absolute;inset:0;overflow:hidden;background:var(--bg);opacity:0;}
+.glitch::before{color:var(--danger);animation:glitchTop 6s infinite;}
+.glitch::after{color:var(--cyan);animation:glitchBottom 6s infinite;}
+@keyframes glitchTop{
+  0%,93%,100%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 0 0);}
+  94%{opacity:0.8;transform:translate(-2px,-1px);clip-path:inset(10% 0 60% 0);}
+  95%{opacity:0.8;transform:translate(2px,1px);clip-path:inset(60% 0 5% 0);}
+  96%{opacity:0;}
+}
+@keyframes glitchBottom{
+  0%,91%,100%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 0 0);}
+  92%{opacity:0.8;transform:translate(2px,1px);clip-path:inset(40% 0 20% 0);}
+  93%{opacity:0.8;transform:translate(-2px,-1px);clip-path:inset(5% 0 70% 0);}
+  94%{opacity:0;}
+}
+
+.hero-sub{max-width:640px;margin:0 auto 8px;color:var(--text-muted);font-size:1rem;line-height:1.8;}
+.hero-sub .txt-en{display:block;margin-top:8px;font-size:0.92rem;}
+
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:36px;}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;padding:15px 32px;border-radius:999px;font-weight:700;font-size:0.95rem;cursor:pointer;border:none;font-family:var(--font-ar);transition:transform .25s ease,box-shadow .25s ease;}
+.btn:hover{transform:translateY(-3px);}
+.btn-primary{background:linear-gradient(135deg,var(--gold),#f0d27a);color:#050505;box-shadow:0 8px 26px rgba(212,175,55,0.3);}
+.btn-outline{background:transparent;border:1.5px solid var(--cyan);color:var(--text);}
+.btn-outline:hover{background:rgba(0,212,255,0.08);}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,0.5);transform:scale(0);animation:rippleAnim .6s ease-out;pointer-events:none;}
+@keyframes rippleAnim{to{transform:scale(4.5);opacity:0;}}
+
+.scroll-indicator{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:1;color:var(--text-muted);animation:bounce 2s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,10px);}}
+
+.section{padding:110px 22px;max-width:1180px;margin:0 auto;}
+.section-head{text-align:center;margin-bottom:56px;}
+.eyebrow{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;}
+.section-title-ar{font-family:var(--font-ar);font-weight:800;font-size:2.1rem;margin:0 0 4px;min-height:1.3em;}
+.section-title-en{font-family:var(--font-display);color:var(--text-muted);font-size:0.95rem;margin-bottom:4px;}
+.section-note{color:var(--text-muted);font-size:0.92rem;max-width:560px;margin:14px auto 0;}
+.section-note .txt-en{display:block;font-size:0.84rem;margin-top:4px;}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+.glow-card{position:relative;background:var(--surface);border:1px solid var(--surface-border);border-radius:var(--radius);}
+.glow-card::before{
+  content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;z-index:-1;
+  background:conic-gradient(from var(--angle,0deg),var(--gold),var(--cyan),var(--gold));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity var(--speed) ease;
+}
+.glow-card:hover::before{opacity:1;}
+@property --angle{syntax:'<angle>';inherits:false;initial-value:0deg;}
+@keyframes rotateAngle{to{--angle:360deg;}}
+.glow-card:hover::before{animation:rotateAngle 3s linear infinite;}
+
+.threats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-bottom:44px;}
+.threat-card{padding:26px;border:1px solid rgba(255,42,109,0.35);border-radius:var(--radius);background:var(--surface);box-shadow:0 0 24px rgba(255,42,109,0.06);text-align:center;}
+.threat-icon{width:44px;height:44px;margin:0 auto 16px;color:var(--danger);}
+.threat-text{font-size:0.95rem;line-height:1.7;}
+.threat-text .txt-en{display:block;margin-top:8px;font-size:0.82rem;color:var(--text-muted);}
+.threats-closer{text-align:center;font-size:1.1rem;font-weight:700;color:var(--gold);}
+.threats-closer .txt-en{display:block;margin-top:6px;font-size:0.9rem;color:var(--text-muted);font-weight:500;}
+
+.category-block{margin-bottom:52px;}
+.category-block.featured{border:1px solid rgba(212,175,55,0.3);border-radius:var(--radius);padding:32px 22px;background:linear-gradient(180deg,rgba(212,175,55,0.05),transparent);}
+.category-head{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+.category-icon{font-size:1.6rem;}
+.category-name-ar{font-family:var(--font-ar);font-weight:800;font-size:1.3rem;}
+.category-name-en{font-size:0.8rem;color:var(--text-muted);}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+.service-card{padding:22px;perspective:800px;transition:transform .15s ease;}
+.service-card-inner{transform-style:preserve-3d;}
+.service-name-ar{font-family:var(--font-ar);font-weight:700;font-size:1.05rem;margin-bottom:2px;}
+.service-name-en{font-size:0.78rem;color:var(--text-muted);margin-bottom:12px;}
+.service-benefit{font-size:0.86rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px;}
+.service-benefit .txt-en{display:block;font-size:0.78rem;margin-top:5px;opacity:0.85;}
+.quote-btn{display:inline-block;font-size:0.78rem;font-weight:700;color:var(--cyan);border:1px solid rgba(0,212,255,0.4);padding:7px 16px;border-radius:999px;}
+.quote-btn:hover{background:rgba(0,212,255,0.1);}
+
+.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+@media(max-width:640px){.trust-grid{grid-template-columns:1fr;}}
+.trust-card{padding:30px 24px;text-align:center;}
+.trust-visual{width:64px;height:64px;margin:0 auto 16px;position:relative;}
+.trust-title-ar{font-family:var(--font-ar);font-weight:800;font-size:1.15rem;}
+.trust-title-en{font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;}
+
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:var(--surface-border);stroke-width:6;}
+.ring-fill{fill:none;stroke:var(--gold);stroke-width:6;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:220;transition:stroke-dashoffset 1.4s ease;}
+.ring-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;font-size:1.1rem;color:var(--gold);}
+
+.shield-wrap{position:relative;}
+.shield-scan{position:absolute;left:6px;right:6px;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);top:0;animation:shieldSweep 2.6s ease-in-out infinite;}
+@keyframes shieldSweep{0%,100%{top:6px;}50%{top:54px;}}
+
+.pulse-dot-wrap{display:flex;align-items:center;justify-content:center;height:64px;}
+.pulse-dot{width:16px;height:16px;border-radius:50%;background:#3cff6e;box-shadow:0 0 0 0 rgba(60,255,110,0.6);animation:livePulse 1.6s ease-out infinite;}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(60,255,110,0.55);}70%{box-shadow:0 0 0 14px rgba(60,255,110,0);}100%{box-shadow:0 0 0 0 rgba(60,255,110,0);}}
+
+.gear-wrap{transition:transform .6s ease;}
+.trust-card:hover .gear-wrap{transform:rotate(180deg);}
+
+.trust-closer{text-align:center;margin-top:44px;font-weight:700;color:var(--gold);font-size:1.02rem;}
+.trust-closer .txt-en{display:block;margin-top:6px;font-size:0.88rem;color:var(--text-muted);font-weight:500;}
+
+.timeline{display:flex;gap:24px;justify-content:space-between;}
+@media(max-width:800px){.timeline{flex-direction:column;}}
+.step{flex:1;text-align:center;position:relative;}
+.step-num{width:52px;height:52px;border-radius:50%;border:2px solid var(--surface-border);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:var(--font-mono);font-weight:700;font-size:1.1rem;color:var(--text-muted);transition:border-color .5s ease,color .5s ease,background-color .5s ease,box-shadow .5s ease;}
+.step.filled .step-num{border-color:var(--gold);color:var(--gold-text);background:var(--gold);box-shadow:0 0 18px rgba(212,175,55,0.4);}
+.step-title-ar{font-family:var(--font-ar);font-weight:700;font-size:1rem;}
+.step-title-en{font-size:0.76rem;color:var(--text-muted);margin-bottom:4px;}
+.step-desc{font-size:0.82rem;color:var(--text-muted);}
+
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;}
+.project-card{border-radius:var(--radius);overflow:hidden;border:1px solid var(--surface-border);background:var(--surface);}
+.project-visual{height:130px;background:linear-gradient(135deg,var(--gold) 0%,var(--surface) 45%,var(--cyan) 100%);opacity:0.85;position:relative;}
+.project-visual::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(0,0,0,0.15) 0 2px,transparent 2px 8px);}
+.project-body{padding:20px;}
+.project-tag{display:inline-block;font-size:0.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
+.project-title-ar{font-family:var(--font-ar);font-weight:700;font-size:1rem;}
+.project-title-en{font-size:0.78rem;color:var(--text-muted);margin-bottom:14px;}
+.view-case{font-size:0.78rem;font-weight:700;color:var(--gold);}
+
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
+.testimonial-card{position:relative;padding:30px 26px;border-radius:var(--radius);background:rgba(255,255,255,0.03);border:1px dashed rgba(212,175,55,0.35);backdrop-filter:blur(8px);}
+[data-theme="light"] .testimonial-card{background:rgba(255,255,255,0.55);}
+.quote-mark{font-family:var(--font-display);font-size:3rem;color:rgba(212,175,55,0.3);line-height:1;margin-bottom:6px;}
+.testimonial-text{font-size:0.92rem;line-height:1.7;margin-bottom:16px;color:var(--text);}
+.testimonial-text .txt-en{display:block;margin-top:8px;font-size:0.84rem;color:var(--text-muted);}
+.testimonial-role{font-size:0.78rem;color:var(--gold);font-weight:700;}
+.sample-tag{position:absolute;top:14px;inset-inline-end:14px;font-size:0.6rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);border:1px solid var(--surface-border);padding:2px 8px;border-radius:999px;}
+
+.faq-item{border-bottom:1px solid var(--surface-border);}
+.faq-q{width:100%;text-align:start;background:none;border:none;padding:20px 4px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--text);}
+.faq-q-text .txt-ar{font-family:var(--font-ar);font-weight:700;font-size:1rem;display:block;}
+.faq-q-text .txt-en{font-size:0.78rem;color:var(--text-muted);}
+.faq-plus{font-size:1.3rem;color:var(--gold);transition:transform .3s ease;flex-shrink:0;margin-inline-start:14px;}
+.faq-item.open .faq-plus{transform:rotate(45deg);}
+.faq-a-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease;}
+.faq-item.open .faq-a-wrap{grid-template-rows:1fr;}
+.faq-a-inner{overflow:hidden;}
+.faq-a{padding:0 4px 20px;font-size:0.9rem;color:var(--text-muted);line-height:1.7;}
+.faq-a .txt-en{display:block;margin-top:8px;font-size:0.82rem;}
+
+.final-cta{background:linear-gradient(135deg,#000 0%,#1a1206 60%,#3a2a08 100%);text-align:center;padding:120px 22px;}
+.final-h2{font-family:var(--font-ar);font-weight:900;font-size:clamp(1.8rem,5vw,3rem);margin-bottom:6px;}
+.final-h2-en{font-family:var(--font-display);color:var(--text-muted);font-size:1.1rem;margin-bottom:20px;}
+.final-sub{max-width:560px;margin:0 auto 40px;color:var(--text-muted);font-size:0.98rem;line-height:1.8;}
+.final-sub .txt-en{display:block;margin-top:8px;font-size:0.88rem;}
+.final-wa{display:inline-flex;align-items:center;gap:10px;padding:20px 44px;border-radius:999px;background:#25D366;color:#fff;font-weight:800;font-size:1.1rem;box-shadow:0 0 0 0 rgba(37,211,102,0.5);animation:waPulse 2.4s ease-out infinite;}
+.final-call{display:block;margin-top:20px;color:var(--text-muted);font-size:0.9rem;}
+.final-call a{color:var(--cyan);font-weight:700;}
+
+.footer{padding:56px 22px 34px;border-top:1px solid var(--surface-border);}
+.footer-inner{max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;}
+.footer-brand{font-family:var(--font-mono);font-size:1.6rem;letter-spacing:3px;color:var(--gold);}
+.footer-mid{text-align:center;color:var(--text-muted);font-size:0.85rem;}
+.footer-links{display:flex;gap:14px;}
+.footer-links a{width:38px;height:38px;border-radius:50%;border:1px solid var(--surface-border);display:flex;align-items:center;justify-content:center;}
+.footer-links svg{width:18px;height:18px;fill:var(--text-muted);}
+.footer-bottom{text-align:center;margin-top:32px;font-size:0.78rem;color:var(--text-muted);}
+.status-line{margin-top:10px;font-family:var(--font-mono);font-size:0.72rem;color:#3cff6e;display:flex;align-items:center;justify-content:center;gap:6px;}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#3cff6e;animation:livePulse 1.6s ease-out infinite;}
+
+@media(max-width:640px){
+  .section{padding:72px 16px;}
+  .hero{padding:104px 16px 56px;}
+  .final-cta{padding:80px 16px;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
+  html{scroll-behavior:auto;}
+  .scanline,.badge .dot,.wa-fab,.pulse-dot,.final-wa{animation:none;}
+}
+</style>
+</head>
+<body class="lang-ar">
+
+<div id="scrollProgress"></div>
+<div id="loader"><div class="loader-term" id="loaderText"></div></div>
+<div id="cursorDot" aria-hidden="true"></div>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-noise" aria-hidden="true"></div>
+<div class="scanline" aria-hidden="true"></div>
+
+<div class="top-bar">
+  <div class="logo-mark">█Ťђẽ•1•ҚĨŊĜ█</div>
+  <div class="top-controls">
+    <div class="pill-toggle" role="group" aria-label="Language">
+      <button id="btnAr" class="active" type="button">AR</button>
+      <button id="btnEn" type="button">EN</button>
+    </div>
+    <button id="themeToggle" class="icon-toggle" type="button" aria-label="Toggle dark and light mode">🌙</button>
+  </div>
+</div>
+
+<a class="wa-fab" href="https://wa.me/963956072151" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.25 1.02 4.3 2.7 5.87L4 22l5.5-1.45C10.3 20.85 11.14 21 12 21c5.52 0 10-4.03 10-9S17.52 2 12 2z"/></svg>
+</a>
+
+<main>
+
+<section class="hero">
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+
+  <div class="badge">
+    <span class="dot"></span>
+    <span class="txt-ar">موثوق من 50+ شركة</span>
+    <span class="txt-en">TRUSTED BY 50+ BUSINESSES</span>
+  </div>
+
+  <h1 class="hero-h1 txt-ar glitch" data-text="نبني. نحمي. نسيطر.">نبني. نحمي. نسيطر.</h1>
+  <h1 class="hero-h1 txt-en glitch" data-text="We Build. We Secure. We Dominate." lang="en">We Build. We Secure. We Dominate.</h1>
+
+  <p class="hero-sub">
+    <span class="txt-ar">تطوير مواقع احترافي وأمن سيبراني على مستوى عسكري للشركات اللي ما بترضى بالعادي.</span>
+    <span class="txt-en" lang="en">Premium web development and military-grade cybersecurity for businesses that refuse to be average.</span>
+  </p>
+
+  <div class="hero-ctas">
+    <a class="btn btn-primary" href="https://wa.me/963956072151" target="_blank" rel="noopener">
+      <span class="txt-ar">ابدأ مشروعك</span><span class="txt-en" lang="en">Start Your Project</span>
+    </a>
+    <a class="btn btn-outline" href="#services">
+      <span class="txt-ar">شوف خدماتنا</span><span class="txt-en" lang="en">View Our Services</span>
+    </a>
+  </div>
+
+  <div class="scroll-indicator" aria-hidden="true">
+    <svg width="22" height="34" viewBox="0 0 22 34"><rect x="1" y="1" width="20" height="32" rx="10" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="10" r="2.5" fill="currentColor"/></svg>
+  </div>
+</section>
+
+<section class="section" id="problem">
+  <div class="section-head reveal">
+    <div class="section-title-ar scramble" data-text="هل عملك معرّض؟">هل عملك معرّض؟</div>
+    <div class="section-title-en">Is Your Business Exposed?</div>
+  </div>
+  <div class="threats-grid">
+    <div class="threat-card reveal">
+      <svg class="threat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div class="threat-text"><span class="txt-ar">70% من الشركات الصغيرة المخترقة بتسكر خلال 6 شهور</span><span class="txt-en" lang="en">70% of hacked small businesses close within 6 months</span></div>
+    </div>
+    <div class="threat-card reveal">
+      <svg class="threat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      <div class="threat-text"><span class="txt-ar">كل ثانية بطء بتخسّرك 7% من مبيعاتك</span><span class="txt-en" lang="en">Every second of slow loading costs you 7% of sales</span></div>
+    </div>
+    <div class="threat-card reveal">
+      <svg class="threat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h16M4 19V9l5-3 5 3v10M14 19V6l6 3v10"/></svg>
+      <div class="threat-text"><span class="txt-ar">منافسينك عندهم مواقع. أنت لا.</span><span class="txt-en" lang="en">Your competitors already have websites. You don't.</span></div>
+    </div>
+  </div>
+  <div class="threats-closer reveal">
+    <span class="txt-ar">نحنا مش بس منبني مواقع. منبني حصون رقمية.</span>
+    <span class="txt-en" lang="en">We don't just build websites. We build digital fortresses.</span>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-head reveal">
+    <div class="eyebrow">Services</div>
+    <div class="section-title-ar scramble" data-text="شو منعمل">شو منعمل</div>
+    <div class="section-title-en">What We Do</div>
+    <p class="section-note">
+      <span class="txt-ar">كل شي عملك بحاجة إلو ليظهر، يتنافس، ويربح أونلاين.</span>
+      <span class="txt-en" lang="en">Everything your business needs to exist, compete, and win online.</span>
+    </p>
+  </div>
+  <div id="categoriesWrap"></div>
+</section>
+
+<section class="section" id="trust">
+  <div class="section-head reveal">
+    <div class="section-title-ar scramble" data-text="ليش الشركات بتثق فينا">ليش الشركات بتثق فينا</div>
+    <div class="section-title-en">Why Businesses Trust Us</div>
+  </div>
+  <div class="trust-grid">
+    <div class="glow-card trust-card reveal">
+      <div class="trust-visual ring-wrap">
+        <svg width="64" height="64" viewBox="0 0 80 80"><circle class="ring-bg" cx="40" cy="40" r="35"/><circle class="ring-fill" id="ringFill" cx="40" cy="40" r="35"/></svg>
+        <div class="ring-num" id="ringNum">0</div>
+      </div>
+      <div class="trust-title-ar">+9 سنوات خبرة</div>
+      <div class="trust-title-en">9+ Years Experience</div>
+    </div>
+    <div class="glow-card trust-card reveal">
+      <div class="trust-visual shield-wrap">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.3"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6l-9-4z"/></svg>
+        <div class="shield-scan"></div>
+      </div>
+      <div class="trust-title-ar">أمن على مستوى عسكري</div>
+      <div class="trust-title-en">Military-Grade Security</div>
+    </div>
+    <div class="glow-card trust-card reveal">
+      <div class="trust-visual pulse-dot-wrap"><div class="pulse-dot"></div></div>
+      <div class="trust-title-ar">دعم بشري 24/7</div>
+      <div class="trust-title-en">24/7 Human Support</div>
+    </div>
+    <div class="glow-card trust-card reveal">
+      <div class="trust-visual gear-wrap" style="display:flex;align-items:center;justify-content:center;">
+        <svg width="52" height="52" viewBox="0 0 24 24" fill="var(--gold)"><path d="M19.14 12.94a7.14 7.14 0 000-1.88l2.03-1.58a.5.5 0 00.12-.64l-1.92-3.32a.5.5 0 00-.6-.22l-2.39.96a7.2 7.2 0 00-1.63-.94l-.36-2.54a.5.5 0 00-.5-.42h-3.84a.5.5 0 00-.5.42l-.36 2.54c-.59.24-1.13.56-1.63.94l-2.39-.96a.5.5 0 00-.6.22L2.71 8.84a.5.5 0 00.12.64l2.03 1.58a7.14 7.14 0 000 1.88l-2.03 1.58a.5.5 0 00-.12.64l1.92 3.32c.14.24.4.32.6.22l2.39-.96c.5.38 1.04.7 1.63.94l.36 2.54c.05.24.25.42.5.42h3.84c.25 0 .45-.18.5-.42l.36-2.54c.59-.24 1.13-.56 1.63-.94l2.39.96c.2.08.46 0 .6-.22l1.92-3.32a.5.5 0 00-.12-.64l-2.03-1.58zM12 15.5a3.5 3.5 0 110-7 3.5 3.5 0 010 7z"/></svg>
+      </div>
+      <div class="trust-title-ar">حلول مخصصة 100%</div>
+      <div class="trust-title-en">100% Custom Solutions</div>
+    </div>
+  </div>
+  <div class="trust-closer reveal">
+    <span class="txt-ar">ما منستخدم قوالب جاهزة. ما في outsource. ما بنساوم.</span>
+    <span class="txt-en" lang="en">We don't use templates. We don't outsource. We don't compromise.</span>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="section-head reveal">
+    <div class="section-title-ar scramble" data-text="مشروعك بـ 4 خطوات">مشروعك بـ 4 خطوات</div>
+    <div class="section-title-en">Your Project in 4 Steps</div>
+  </div>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<section class="section" id="portfolio">
+  <div class="section-head reveal">
+    <div class="section-title-ar scramble" data-text="مشاريع حديثة">مشاريع حديثة</div>
+    <div class="section-title-en">Recent Projects</div>
+  </div>
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<section class="section" id="testimonials">
+  <div class="section-head reveal">
+    <div class="section-title-ar scramble" data-text="شو بيقول عملاؤنا">شو بيقول عملاؤنا</div>
+    <div class="section-title-en">What Clients Say</div>
+  </div>
+  <div class="testimonials-grid" id="testimonialsGrid"></div>
+</section>
+
+<section class="section" id="faq">
+  <div class="section-head reveal">
+    <div class="section-title-ar scramble" data-text="الأسئلة الشائعة">الأسئلة الشائعة</div>
+    <div class="section-title-en">FAQ</div>
+  </div>
+  <div id="faqWrap"></div>
+</section>
+
+<section class="final-cta reveal">
+  <div class="final-h2 txt-ar">جاهز تحمي مستقبلك؟</div>
+  <div class="final-h2-en txt-en" lang="en">Ready to Secure Your Future?</div>
+  <p class="final-sub">
+    <span class="txt-ar">كل يوم بدون موقع آمن هو يوم بيربح فيه منافسيك.</span>
+    <span class="txt-en" lang="en">Every day without a secure website is a day your competitors win.</span>
+  </p>
+  <a class="final-wa" href="https://wa.me/963956072151" target="_blank" rel="noopener">
+    <span class="txt-ar">ابدأ عالواتساب</span><span class="txt-en" lang="en">Start on WhatsApp</span>
+  </a>
+  <div class="final-call"><span class="txt-ar">أو اتصل: </span><span class="txt-en" lang="en">Or call us: </span><a href="tel:+963956072151" class="mono ltr">+963 956072151</a></div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">█Ťђẽ•1•ҚĨŊĜ█</div>
+    <div class="footer-mid">Powered by Jafer Morhej | Damascus, Syria</div>
+    <div class="footer-links">
+      <a href="https://wa.me/963956072151" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.25 1.02 4.3 2.7 5.87L4 22l5.5-1.45C10.3 20.85 11.14 21 12 21c5.52 0 10-4.03 10-9S17.52 2 12 2z"/></svg></a>
+      <a href="tel:+963956072151" aria-label="Call"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.9 15.9 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11 11 0 003.5.56 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11 11 0 00.56 3.5 1 1 0 01-.25 1z"/></svg></a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div><span class="txt-ar">© 2026 جميع الحقوق محفوظة. أمنك هو مهمتنا.</span> <span class="txt-en" lang="en">© 2026 All Rights Reserved. Your security is our mission.</span></div>
+    <div class="status-line"><span class="status-dot"></span> SYSTEM SECURE 🔒</div>
+  </div>
+</footer>
+
+<script>
+
+const CATEGORIES = [
+  {icon:"🌐", ar:"الحضور الرقمي", en:"Digital Presence", services:[
+    {ar:"مواقع احترافية", en:"Professional Websites", bAr:"موقع ما بيعرض بس - بيحوّل الزوار لعملاء فعليين.", bEn:"A site that turns visitors into customers, not just an online brochure."},
+    {ar:"متاجر إلكترونية", en:"E-Commerce Stores", bAr:"بيع على مدار الساعة بدون محل فيزيائي.", bEn:"Sell around the clock without a physical storefront."},
+    {ar:"أنظمة حجز مطاعم", en:"Restaurant Booking Systems", bAr:"طاولات أقل ما بتضيع، وزباين أكتر بيرجعوا.", bEn:"Fewer missed tables, more repeat customers."},
+    {ar:"أنظمة مواعيد", en:"Appointment Systems", bAr:"جدولك بيمتلي لحاله وإنت مرتاح بشغلك.", bEn:"Your calendar fills itself while you focus on the work."},
+    {ar:"بوابات عقارات وسيارات", en:"Real Estate & Auto Portals", bAr:"اعرض كل عرض متل معرض راقي، مش متل إعلان مبوّب.", bEn:"Showcase every listing like a premium dealership, not a classifieds page."},
+    {ar:"صفحات هبوط", en:"Landing Pages", bAr:"مصممة لتحويل نقرات الإعلان لعملاء حقيقيين، بسرعة.", bEn:"Built to convert ad clicks into real leads, fast."}
+  ]},
+  {icon:"🛡️", ar:"الأمن السيبراني", en:"Cybersecurity", featured:true, services:[
+    {ar:"اختبار اختراق", en:"Penetration Testing", bAr:"منفوت عالنظام قبل المجرمين - بس نحنا بصفكم.", bEn:"We break in before criminals do — legally, and on your side."},
+    {ar:"تقييم الثغرات", en:"Vulnerability Assessment", bAr:"اعرف كل نقطة ضعف قبل ما حدا غيرك يلاقيها.", bEn:"Know every weak point before someone else finds it first."},
+    {ar:"تدقيق أمان الخوادم", en:"Server Security Audit", bAr:"بنيتك التحتية، مختبرة بأساليب هجوم حقيقية.", bEn:"Your infrastructure, stress-tested against real attack methods."},
+    {ar:"حماية SSL والبيانات", en:"SSL & Data Protection", bAr:"كل بايت بيرسله عميلك بضل مشفّر وخاص.", bEn:"Every byte your customers send stays encrypted and private."},
+    {ar:"تحصين ووردبريس", en:"WordPress Hardening", bAr:"بيسكر بالضبط الأبواب يلي منها بتنخترق مواقع ووردبريس.", bEn:"Closes the exact doors most WordPress hacks walk through."},
+    {ar:"تدقيق أمني شامل", en:"Full Security Audit", bAr:"خريطة كاملة لمخاطرك، مع خطة لحلها.", bEn:"A complete map of your risk, with a plan to fix it."},
+    {ar:"استشارة أمنية", en:"Security Consultation", bAr:"جواب واضح وصريح عن وين وضعك الأمني فعليًا.", bEn:"Straight answers on where your business actually stands."}
+  ]},
+  {icon:"🏢", ar:"أنظمة الأعمال", en:"Business Systems", services:[
+    {ar:"نظام نقاط بيع", en:"POS Systems", bAr:"كل عملية بيع مسجّلة، وكل وردية محسوبة.", bEn:"Every sale tracked, every shift accounted for."},
+    {ar:"إدارة علاقات العملاء", en:"CRM", bAr:"ما بترجع تنسى عميل ولا مرة.", bEn:"Never lose track of a customer again."},
+    {ar:"تخطيط موارد المؤسسات", en:"ERP", bAr:"كل قسم، بنظام واحد، بلا فوضى.", bEn:"Every department, one system, zero chaos."},
+    {ar:"بوابات دفع", en:"Payment Gateways", bAr:"قبض حقك أونلاين بدون صداع تقني.", bEn:"Get paid online without the technical headache."},
+    {ar:"ربط واتساب API", en:"WhatsApp API Integration", bAr:"رد على كل رسالة عميل أوتوماتيكيًا وفورًا.", bEn:"Answer every customer message automatically, instantly."},
+    {ar:"تطوير API مخصص", en:"Custom API Development", bAr:"خلّي أنظمتك الحالية تحكي مع بعضها أخيرًا.", bEn:"Make your existing tools finally talk to each other."}
+  ]},
+  {icon:"📈", ar:"النمو والدعم", en:"Growth & Support", services:[
+    {ar:"تحسين محركات البحث", en:"SEO", bAr:"ظهر أول لما زباينك يكونوا عم يدوروا.", bEn:"Show up first when your customers are already searching."},
+    {ar:"إعلانات جوجل", en:"Google Ads", bAr:"كل دولار إعلان موجّه لناس جاهزين يشتروا.", bEn:"Every ad dollar aimed at people ready to buy."},
+    {ar:"تحسين الأداء", en:"Performance Optimization", bAr:"موقع بيفتح قبل ما الزائر يزهق ويسكر التبويب.", bEn:"A site that loads before your visitor loses patience."},
+    {ar:"استضافة آمنة", en:"Secure Hosting", bAr:"موقعك ضل شغال، محمي، وسريع - دايمًا.", bEn:"Your site stays online, protected, and fast — always."},
+    {ar:"نسخ احتياطي يومي", en:"Daily Backups", bAr:"مهما صار، بياناتك ما بتضيع نهائيًا.", bEn:"Whatever happens, your data is never truly gone."},
+    {ar:"صيانة ودعم", en:"Maintenance & Support", bAr:"على بعد مكالمة وحدة أي وقت في شي بده تصليح.", bEn:"One call away whenever something needs fixing."}
+  ]}
+];
+
+const PROJECTS = [
+  {catAr:"مطعم", catEn:"Restaurant", tAr:"حجز + منيو رقمي + واتساب", tEn:"Booking + Digital Menu + WhatsApp"},
+  {catAr:"معرض سيارات", catEn:"Auto Dealership", tAr:"منصة عرض متكاملة", tEn:"Full Dealership Platform"},
+  {catAr:"عيادة", catEn:"Clinic", tAr:"نظام مواعيد + CRM", tEn:"Appointments + CRM"},
+  {catAr:"شركة تقنية", catEn:"Tech Company", tAr:"موقع مؤسسي + اختبار اختراق", tEn:"Corporate Site + Penetration Test"},
+  {catAr:"مول تجاري", catEn:"Shopping Mall", tAr:"متجر إلكتروني ببوابة دفع", tEn:"E-commerce with Payment Gateway"},
+  {catAr:"مكتب عقاري", catEn:"Real Estate Office", tAr:"منصة عرض عقارات", tEn:"Property Listing Platform"}
+];
+
+const TESTIMONIALS = [
+  {qAr:"[أضف هنا اقتباس حقيقي من أحد عملائك]", qEn:"[Add a real client quote here]", rAr:"[دور العميل، اسم الشركة]", rEn:"[Client Role, Company Name]"},
+  {qAr:"[أضف هنا اقتباس حقيقي من أحد عملائك]", qEn:"[Add a real client quote here]", rAr:"[دور العميل، اسم الشركة]", rEn:"[Client Role, Company Name]"},
+  {qAr:"[أضف هنا اقتباس حقيقي من أحد عملائك]", qEn:"[Add a real client quote here]", rAr:"[دور العميل، اسم الشركة]", rEn:"[Client Role, Company Name]"}
+];
+
+const PROCESS_STEPS = [
+  {ar:"مكالمة استكشافية", en:"Discovery Call", dAr:"منفهم احتياجاتك", dEn:"We understand your needs"},
+  {ar:"تدقيق أمني", en:"Security Audit", dAr:"منفحص وضعك الحالي، حتى لو ما عندك شي", dEn:"We check your current state, even if you have nothing"},
+  {ar:"البناء والحماية", en:"Build & Protect", dAr:"منطوّر بعقلية أمنية أولاً", dEn:"We develop with a security-first mindset"},
+  {ar:"الإطلاق والمراقبة", en:"Launch & Monitor", dAr:"إطلاق مباشر مع حماية مستمرة", dEn:"Go live with ongoing protection"}
+];
+
+const FAQS = [
+  {qAr:"قديش بياخد الموقع؟", qEn:"How long does a website take?",
+   aAr:"عادةً الموقع الاحترافي بياخد من أسبوع لـ3 أسابيع حسب حجم المشروع، والأنظمة الأكبر متل المتاجر أو CRM وERP بتاخد من 4 لـ8 أسابيع. منعطيك جدول زمني واضح قبل ما نبلش.",
+   aEn:"A standard business website typically takes 1–3 weeks depending on complexity, while larger systems like e-commerce, CRM, or ERP can take 4–8 weeks. We give you a clear timeline before we start."},
+  {qAr:"بتقدمو استضافة؟", qEn:"Do you provide hosting?",
+   aAr:"أكيد، منقدم استضافة آمنة مع نسخ احتياطي يومي ومراقبة مستمرة، أو منقدر نشتغل مع الاستضافة يلي عندك إذا بتفضل هيك.",
+   aEn:"Yes — we offer secure hosting with daily backups and monitoring, or we can work with your existing host if you prefer."},
+  {qAr:"شو لو عندي موقع من قبل؟", qEn:"What if I already have a website?",
+   aAr:"منراجع موقعك الحالي نلاقي فيه ثغرات أمنية أو مشاكل أداء، وبعدين نحسّنه أو نعيد تصميمه أو ننقله - بدون ما تخسر بياناتك أو يوقف الموقع.",
+   aEn:"We can audit your current site for security gaps and performance issues, then upgrade, redesign, or migrate it — without losing your data or downtime."},
+  {qAr:"عملي صغير، بيحتاج أمن سيبراني؟", qEn:"Is my business too small for cybersecurity?",
+   aAr:"ما في عمل صغير كتير عأمن سيبراني - المخترقين كتير بيستهدفوا الشركات الصغيرة لأنهم بيتوقعوا حماية أضعف. الحماية الأساسية أرخص مما بتتخيل.",
+   aEn:"No business is too small — attackers often target small businesses specifically because they expect weaker defenses. Basic protection is more affordable than you think."},
+  {qAr:"كيف منبلش؟", qEn:"How do we start?",
+   aAr:"بس تواصل معنا عالواتساب أو اتصل - منحدد مكالمة قصيرة نفهم فيها احتياجاتك ومنحدد الخطوات الجاية.",
+   aEn:"Just reach out on WhatsApp or call us — we'll schedule a short discovery call to understand your needs and outline next steps."}
+];
+const FAQ_CLOSER_AR = "تواصل معنا عالواتساب لاستشارة مجانية.";
+const FAQ_CLOSER_EN = "Contact us on WhatsApp for a free consultation.";
+
+function renderCategories(){
+  const wrap = document.getElementById("categoriesWrap");
+  wrap.innerHTML = CATEGORIES.map(cat => `
+    <div class="category-block reveal ${cat.featured ? "featured" : ""}">
+      <div class="category-head">
+        <span class="category-icon">${cat.icon}</span>
+        <div>
+          <div class="category-name-ar">${cat.ar}</div>
+          <div class="category-name-en txt-en">${cat.en}</div>
+        </div>
+      </div>
+      <div class="services-grid">
+        ${cat.services.map(s => `
+          <div class="glow-card service-card tilt-card">
+            <div class="service-card-inner">
+              <div class="service-name-ar">${s.ar}</div>
+              <div class="service-name-en txt-en">${s.en}</div>
+              <div class="service-benefit"><span class="txt-ar">${s.bAr}</span><span class="txt-en">${s.bEn}</span></div>
+              <a class="quote-btn" target="_blank" rel="noopener" href="https://wa.me/963956072151?text=${encodeURIComponent("Hello, I'm interested in " + s.en)}">
+                <span class="txt-ar">اطلب عرض سعر</span><span class="txt-en">Request Quote</span>
+              </a>
+            </div>
+          </div>`).join("")}
+      </div>
+    </div>`).join("");
+  document.querySelectorAll("#categoriesWrap .category-block").forEach(el => revealObserver.observe(el));
+  initTilt();
+}
+
+function renderProjects(){
+  const grid = document.getElementById("projectsGrid");
+  grid.innerHTML = PROJECTS.map(p => `
+    <div class="project-card reveal">
+      <div class="project-visual" aria-hidden="true"></div>
+      <div class="project-body">
+        <span class="project-tag">${p.catAr} / ${p.catEn}</span>
+        <div class="project-title-ar">${p.tAr}</div>
+        <div class="project-title-en txt-en">${p.tEn}</div>
+        <a class="view-case" target="_blank" rel="noopener" href="https://wa.me/963956072151?text=${encodeURIComponent("Hello, I'd like to know more about your " + p.catEn + " projects")}">
+          <span class="txt-ar">شوف التفاصيل</span><span class="txt-en">View Case</span>
+        </a>
+      </div>
+    </div>`).join("");
+  document.querySelectorAll("#projectsGrid .project-card").forEach(el => revealObserver.observe(el));
+}
+
+function renderTestimonials(){
+  const grid = document.getElementById("testimonialsGrid");
+  grid.innerHTML = TESTIMONIALS.map(t => `
+    <div class="testimonial-card reveal">
+      <span class="sample-tag txt-ar">نموذج</span>
+      <span class="sample-tag txt-en">Sample</span>
+      <div class="quote-mark" aria-hidden="true">"</div>
+      <div class="testimonial-text"><span class="txt-ar">${t.qAr}</span><span class="txt-en">${t.qEn}</span></div>
+      <div class="testimonial-role"><span class="txt-ar">${t.rAr}</span><span class="txt-en">${t.rEn}</span></div>
+    </div>`).join("");
+  document.querySelectorAll("#testimonialsGrid .testimonial-card").forEach(el => revealObserver.observe(el));
+}
+
+function renderTimeline(){
+  const wrap = document.getElementById("timeline");
+  wrap.innerHTML = PROCESS_STEPS.map((s,i) => `
+    <div class="step reveal">
+      <div class="step-num">${i+1}</div>
+      <div class="step-title-ar">${s.ar}</div>
+      <div class="step-title-en txt-en">${s.en}</div>
+      <div class="step-desc"><span class="txt-ar">${s.dAr}</span><span class="txt-en">${s.dEn}</span></div>
+    </div>`).join("");
+  document.querySelectorAll("#timeline .step").forEach(el => {
+    revealObserver.observe(el);
+    fillObserver.observe(el);
+  });
+}
+
+function renderFaq(){
+  const wrap = document.getElementById("faqWrap");
+  wrap.innerHTML = FAQS.map((f,i) => `
+    <div class="faq-item reveal" data-index="${i}">
+      <button class="faq-q" aria-expanded="false">
+        <span class="faq-q-text"><span class="txt-ar">${f.qAr}</span><span class="txt-en">${f.qEn}</span></span>
+        <span class="faq-plus" aria-hidden="true">+</span>
+      </button>
+      <div class="faq-a-wrap"><div class="faq-a-inner"><div class="faq-a">
+        <span class="txt-ar">${f.aAr} ${FAQ_CLOSER_AR}</span>
+        <span class="txt-en">${f.aEn} ${FAQ_CLOSER_EN}</span>
+      </div></div></div>
+    </div>`).join("");
+  document.querySelectorAll("#faqWrap .faq-item").forEach(el => {
+    revealObserver.observe(el);
+    el.querySelector(".faq-q").addEventListener("click", () => {
+      const wasOpen = el.classList.contains("open");
+      document.querySelectorAll("#faqWrap .faq-item.open").forEach(o => {o.classList.remove("open"); o.querySelector(".faq-q").setAttribute("aria-expanded","false");});
+      if(!wasOpen){el.classList.add("open"); el.querySelector(".faq-q").setAttribute("aria-expanded","true");}
+    });
+  });
+}
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add("visible"); revealObserver.unobserve(e.target); } });
+}, {threshold:0.12});
+
+const fillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add("filled"); fillObserver.unobserve(e.target); } });
+}, {threshold:0.4});
+
+document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+
+/* trust ring fill + counter */
+const ringObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      document.getElementById("ringFill").style.strokeDashoffset = 22; // ~90% of 220 circumference
+      animateNum(document.getElementById("ringNum"), 9, "+");
+      ringObserver.unobserve(e.target);
+    }
+  });
+}, {threshold:0.5});
+ringObserver.observe(document.querySelector(".ring-wrap"));
+
+function animateNum(el, target, suffix){
+  const duration = 1200, start = performance.now();
+  function tick(now){
+    const p = Math.min((now-start)/duration,1);
+    const eased = 1-Math.pow(1-p,3);
+    el.textContent = Math.round(eased*target)+suffix;
+    if(p<1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+const SCRAMBLE_CHARS = "!<>-_\\/[]{}—=+*^?#________هابتثجحخدذرزسشصضطظعغفقكلمنوي";
+function scrambleTo(el, finalText){
+  if(reduceMotion){ el.textContent = finalText; return; }
+  let frame = 0;
+  const totalFrames = 16;
+  const interval = setInterval(() => {
+    frame++;
+    const revealCount = Math.floor((frame/totalFrames)*finalText.length);
+    let out = "";
+    for(let i=0;i<finalText.length;i++){
+      if(i < revealCount || finalText[i] === " "){ out += finalText[i]; }
+      else{ out += SCRAMBLE_CHARS[Math.floor(Math.random()*SCRAMBLE_CHARS.length)]; }
+    }
+    el.textContent = out;
+    if(frame >= totalFrames){ clearInterval(interval); el.textContent = finalText; }
+  }, 35);
+}
+const scrambleObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      scrambleTo(e.target, e.target.dataset.text);
+      scrambleObserver.unobserve(e.target);
+    }
+  });
+}, {threshold:0.5});
+document.querySelectorAll(".scramble").forEach(el => scrambleObserver.observe(el));
+
+function initTilt(){
+  if(reduceMotion) return;
+  document.querySelectorAll(".tilt-card").forEach(card => {
+    const inner = card.querySelector(".service-card-inner");
+    card.addEventListener("mousemove", (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left)/rect.width - 0.5;
+      const y = (e.clientY - rect.top)/rect.height - 0.5;
+      inner.style.transform = `rotateY(${x*10}deg) rotateX(${-y*10}deg)`;
+    });
+    card.addEventListener("mouseleave", () => { inner.style.transform = "rotateY(0deg) rotateX(0deg)"; });
+  });
+}
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn, .final-wa");
+  if(!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const span = document.createElement("span");
+  span.className = "ripple";
+  const size = Math.max(rect.width, rect.height);
+  span.style.width = span.style.height = size+"px";
+  span.style.left = (e.clientX-rect.left-size/2)+"px";
+  span.style.top = (e.clientY-rect.top-size/2)+"px";
+  btn.style.position = "relative";
+  btn.style.overflow = "hidden";
+  btn.appendChild(span);
+  setTimeout(() => span.remove(), 650);
+});
+
+const root = document.documentElement;
+const themeBtn = document.getElementById("themeToggle");
+const savedTheme = localStorage.getItem("jm_theme");
+let theme = savedTheme || "dark";
+root.setAttribute("data-theme", theme);
+themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+themeBtn.addEventListener("click", () => {
+  theme = theme === "dark" ? "light" : "dark";
+  root.setAttribute("data-theme", theme);
+  localStorage.setItem("jm_theme", theme);
+  themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
+});
+
+const btnAr = document.getElementById("btnAr");
+const btnEn = document.getElementById("btnEn");
+function setLang(lang){
+  if(lang === "en"){
+    root.setAttribute("dir","ltr"); root.setAttribute("lang","en");
+    document.body.classList.remove("lang-ar"); document.body.classList.add("lang-en");
+    btnEn.classList.add("active"); btnAr.classList.remove("active");
+  } else {
+    root.setAttribute("dir","rtl"); root.setAttribute("lang","ar");
+    document.body.classList.remove("lang-en"); document.body.classList.add("lang-ar");
+    btnAr.classList.add("active"); btnEn.classList.remove("active");
+  }
+  localStorage.setItem("jm_lang", lang);
+}
+btnAr.addEventListener("click", () => setLang("ar"));
+btnEn.addEventListener("click", () => setLang("en"));
+const savedLang = localStorage.getItem("jm_lang");
+if(savedLang) setLang(savedLang);
+
+if(window.matchMedia("(pointer: fine)").matches && !reduceMotion){
+  root.classList.add("custom-cursor");
+  const dot = document.getElementById("cursorDot");
+  document.addEventListener("mousemove", (e) => { dot.style.left = e.clientX+"px"; dot.style.top = e.clientY+"px"; });
+  document.addEventListener("mouseover", (e) => {
+    if(e.target.closest("a, button, .tilt-card, .faq-q")) dot.classList.add("hover"); else dot.classList.remove("hover");
+  });
+}
+
+const progressBar = document.getElementById("scrollProgress");
+window.addEventListener("scroll", () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  progressBar.style.width = pct + "%";
+}, {passive:true});
+
+function initParticles(){
+  const canvas = document.getElementById("particleCanvas");
+  const hero = canvas.parentElement;
+  if(reduceMotion){ canvas.style.display = "none"; return; }
+  const ctx = canvas.getContext("2d");
+  let w,h,particles;
+  const mouse = {x:null,y:null};
+
+  function resize(){
+    w = canvas.width = hero.offsetWidth;
+    h = canvas.height = hero.offsetHeight;
+    const count = Math.min(70, Math.floor((w*h)/18000));
+    particles = Array.from({length:count}, () => ({
+      x: Math.random()*w, y: Math.random()*h,
+      vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4
+    }));
+  }
+  window.addEventListener("resize", resize);
+  hero.addEventListener("mousemove", (e) => {
+    const rect = hero.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+  });
+  hero.addEventListener("mouseleave", () => { mouse.x = null; mouse.y = null; });
+
+  function tick(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if(p.x < 0 || p.x > w) p.vx *= -1;
+      if(p.y < 0 || p.y > h) p.vy *= -1;
+      if(mouse.x !== null){
+        const dx = p.x-mouse.x, dy = p.y-mouse.y, dist = Math.hypot(dx,dy);
+        if(dist < 110){ p.x += dx/dist*0.6; p.y += dy/dist*0.6; }
+      }
+    });
+    ctx.strokeStyle = "rgba(0,212,255,0.12)";
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx = particles[i].x-particles[j].x, dy = particles[i].y-particles[j].y;
+        const dist = Math.hypot(dx,dy);
+        if(dist < 130){
+          ctx.globalAlpha = 1-dist/130;
+          ctx.beginPath(); ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "rgba(212,175,55,0.55)";
+    particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x,p.y,1.6,0,Math.PI*2); ctx.fill(); });
+    requestAnimationFrame(tick);
+  }
+  resize();
+  tick();
+}
+
+function runLoader(){
+  const lines = ["INITIALIZING SECURE CONNECTION...", "AUTHENTICATING...", "ACCESS GRANTED"];
+  const el = document.getElementById("loaderText");
+  if(reduceMotion){
+    el.innerHTML = lines.join("<br>");
+    finishLoad();
+    return;
+  }
+  let i = 0;
+  function nextLine(){
+    if(i >= lines.length){ setTimeout(finishLoad, 250); return; }
+    const row = document.createElement("div");
+    el.appendChild(row);
+    let c = 0;
+    const text = lines[i];
+    (function type(){
+      if(c < text.length){ row.textContent += text[c]; c++; setTimeout(type, 14); }
+      else { i++; setTimeout(nextLine, 160); }
+    })();
+  }
+  nextLine();
+}
+function finishLoad(){
+  document.getElementById("loader").classList.add("hide");
+}
+
+renderCategories();
+renderProjects();
+renderTestimonials();
+renderTimeline();
+renderFaq();
+initParticles();
+
+window.addEventListener("load", () => {
+  runLoader();
+});
+</script>
+</body>
+</html>
